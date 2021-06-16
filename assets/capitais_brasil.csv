@@ -1,28 +1,28 @@
 Código,Capitais,Estados,Siglas dos Estados,Regiões
 1200401,Rio Branco,Acre,AC,Norte
 2704302,Maceió,Alagoas,AL,Nordeste
-1302603,Macapá,Amapá,AP,Norte
-1600303,Manaus,Amazonas,AM,Norte
+1302603,Manaus,Amazonas,AM,Norte
+1600303,Macapá,Amapá,AP,Norte
 2927408,Salvador,Bahia,BA,Nordeste
 2304400,Fortaleza,Ceará,CE,Nordeste
 5300108,Brasília,Distrito Federal,DF,Centro-Oeste
 3205309,Vitória,Espírito Santo,ES,Sudeste
 5208707,Goiânia,Goiás,GO,Centro-Oeste
 2111300,São Luís,Maranhão,MA,Nordeste
-3106200,Cuiabá,Mato Grosso,MT,Centro-Oeste
+3106200,Belo Horizonte,Minas Gerais,MG,Sudeste
 5002704,Campo Grande,Mato Grosso do Sul,MS,Centro-Oeste
-5103403,Belo Horizonte,Minas Gerais,MG,Sudeste
+5103403,Cuiabá,Mato Grosso,MT,Centro-Oeste
 1501402,Belém,Pará,PA,Norte
 2507507,João Pessoa,Paraíba,PB,Nordeste
-2611606,Curitiba,Paraná,PR,Sul
-2211001,Recife,Pernambuco,PE,Nordeste
-4106902,Teresina,Piauí,PI,Nordeste
+2611606,Recife,Pernambuco,PE,Nordeste
+2211001,Teresina,Piauí,PI,Nordeste
+4106902,Curitiba,Paraná,PR,Sul
 3304557,Rio de Janeiro,Rio de Janeiro,RJ,Sudeste
 2408102,Natal,Rio Grande do Norte,RN,Nordeste
-1100205,Porto Alegre,Rio Grande do Sul,RS,Sul
-1400100,Porto Velho,Rondônia,RO,Norte
-4314902,Boa Vista,Roraima,RR,Norte
+1100205,Porto Velho,Rondônia,RO,Norte
+1400100,Boa Vista,Roraima,RR,Norte
+4314902,Porto Alegre,Rio Grande do Sul,RS,Sul
 4205407,Florianópolis,Santa Catarina,SC,Sul
-2800308,São Paulo,São Paulo,SP,Sudeste
-3550308,Aracaju,Sergipe,SE,Nordeste
+2800308,Aracaju,Sergipe,SE,Nordeste
+3550308,São Paulo,São Paulo,SP,Sudeste
 1721000,Palmas,Tocantins,TO,Norte
