@@ -1,0 +1,42 @@
+stages:
+  - lint
+  - preproc
+
+.python-setup:
+  image: python:3.8
+  before_script:
+    - pip install --upgrade pip setuptools wheel
+    - pip install -r requirements.txt
+
+.lint:
+  extends: .python-setup
+  stage: lint
+
+.preproc:
+  extends: .python-setup
+  stage: preproc
+
+black:
+  extends: .lint
+  script:
+    - make check-black
+
+isort:
+  extends: .lint
+  script:
+    - make check-isort
+
+pylint:
+  extends: .lint
+  script:
+    - make check-pylint
+
+mypy:
+  extends: .lint
+  script:
+    - make check-mypy
+
+parse_ideb:
+  extends: .preproc
+  script:
+    - make parse_ideb
