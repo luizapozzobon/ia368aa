@@ -7,6 +7,9 @@ PYTHON_FILES += $(wildcard $(SCRIPTS_DIR)/*.py)
 
 .PHONY: clean lint check-black check-isort
 
+parse_ideb: $(OUTPUT_DIR)
+	python -m $(SCRIPTS_DIR).parse_ideb --networks Pública Estadual Municipal
+
 $(OUTPUT_DIR):
 	@mkdir -p $(OUTPUT_DIR)
 

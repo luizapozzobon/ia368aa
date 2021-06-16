@@ -6,6 +6,7 @@ Source:
 import argparse
 from enum import Enum
 from pathlib import Path
+from typing import List
 
 import pandas as pd
 
@@ -27,7 +28,7 @@ class EducationNetwork(Enum):
 
 
 def export_ideb_data(
-    assets_dir: Path, outputs_dir: Path, network: EducationNetwork
+    assets_dir: Path, outputs_dir: Path, networks: List[EducationNetwork]
 ) -> None:
     """Export IDEB scores for each state's capital."""
     ideb_df = pd.read_excel(
@@ -43,13 +44,19 @@ def export_ideb_data(
         usecols=[0],
         squeeze=True,
     )
-    network_list = [network.value] * len(brazil_info_series)
-    ideb_capital_indices = list(zip(brazil_info_series, network_list))
-    ideb_capital_df = ideb_df.loc[ideb_capital_indices]
-    ideb_capital_df.index = ideb_capital_df.index.droplevel("Rede")
-    ideb_capital_df.to_csv(
-        outputs_dir / f"ideb_capitals_{network.name.lower()}.csv"
-    )
+
+    for network in networks:
+        network_list = [network.value] * len(brazil_info_series)
+        ideb_capital_indices = list(zip(brazil_info_series, network_list))
+
+        # Ignore missing indices by only keeping the intersection.
+        ideb_capital_indices = ideb_df.index.intersection(ideb_capital_indices)
+
+        ideb_capital_df = ideb_df.loc[ideb_capital_indices]
+        ideb_capital_df.index = ideb_capital_df.index.droplevel("Rede")
+        ideb_capital_df.to_csv(
+            outputs_dir / f"ideb_capitals_{network.name.lower()}.csv"
+        )
 
 
 if __name__ == "__main__":
@@ -67,8 +74,9 @@ if __name__ == "__main__":
         help="Directory to export processed data.",
     )
     parser.add_argument(
-        "--network",
-        default=EducationNetwork.PUBLIC,
+        "--networks",
+        nargs="+",
+        default=[EducationNetwork.PUBLIC],
         type=EducationNetwork,
         choices=list(EducationNetwork),
         help="Type of education network results we wish to export data for.",
