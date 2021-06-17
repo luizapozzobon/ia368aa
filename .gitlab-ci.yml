@@ -17,13 +17,15 @@ stages:
   extends: .python-setup
   stage: preproc
   artifacts:
-    - outputs/
+      paths:
+        - outputs/
 
 .visualizations:
   extends: .python-setup
   stage: visualizations
   artifacts:
-    - outputs/
+      paths:
+        - outputs/
 
 black:
   extends: .lint
@@ -45,7 +47,7 @@ mypy:
   script:
     - make check-mypy
 
-parse_ideb:
+parse-ideb:
   extends: .preproc
   script:
     - make parse_ideb
