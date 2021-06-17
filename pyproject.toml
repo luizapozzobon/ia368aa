@@ -20,9 +20,29 @@ warn_unused_configs = true
 
 [[tool.mypy.overrides]]
 module = [
-    "pandas"
+    "matplotlib.*",
+    "scipy.*",
+    "sklearn.*",
+    "pandas",
 ]
 ignore_missing_imports = true
 
 [tool.pylint.master]
 init-hook = "from pylint.config import find_default_config_files; import os, sys; sys.path.append(os.path.dirname(list(find_default_config_files())[0]))"
+
+[tool.pylint.messages_control]
+disable = [
+    "R0914",  # too-many-local-variables
+]
+
+[tool.pylint.basic]
+good-names = [
+    "i",
+    "j",
+    "x",
+    "y",
+    "X",
+    "k",
+    "ax",
+    "_",
+]
