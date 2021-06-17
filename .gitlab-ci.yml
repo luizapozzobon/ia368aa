@@ -15,6 +15,14 @@ stages:
 .preproc:
   extends: .python-setup
   stage: preproc
+  artifacts:
+    - outputs/
+
+.visualizations:
+  extends: .python-setup
+  stage: visualizations
+  artifacts:
+    - outputs/
 
 black:
   extends: .lint
@@ -40,3 +48,18 @@ parse_ideb:
   extends: .preproc
   script:
     - make parse_ideb
+
+homicides_per_capita:
+  extends: .preproc
+  script:
+    - make homicides_per_capita
+
+correlate:
+  extends: .visualizations
+  script:
+    - make correlate
+
+population_trend:
+  extends: .visualizations
+  script:
+    - make population_trend

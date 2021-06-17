@@ -7,6 +7,16 @@ PYTHON_FILES += $(wildcard $(SCRIPTS_DIR)/*.py)
 
 .PHONY: clean lint check-black check-isort
 
+
+correlate: $(OUTPUT_DIR)
+	python -m $(SRC_DIR).vis.correlate
+
+population_trend: $(OUTPUT_DIR)
+	python -m $(SRC_DIR).vis.population_trend
+
+homicides_per_capita: $(OUTPUT_DIR)
+	python -m $(SCRIPTS_DIR).homicides_per_capita
+
 parse_ideb: $(OUTPUT_DIR)
 	python -m $(SCRIPTS_DIR).parse_ideb \
 		--networks Pública Estadual Municipal \
