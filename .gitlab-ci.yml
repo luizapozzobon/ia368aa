@@ -1,6 +1,7 @@
 stages:
   - lint
   - preproc
+  - visualizations
 
 .python-setup:
   image: python:3.8
@@ -49,7 +50,7 @@ parse_ideb:
   script:
     - make parse_ideb
 
-homicides_per_capita:
+homicides-per-capita:
   extends: .preproc
   script:
     - make homicides_per_capita
@@ -59,7 +60,7 @@ correlate:
   script:
     - make correlate
 
-population_trend:
+population-trend:
   extends: .visualizations
   script:
     - make population_trend
