@@ -20,7 +20,7 @@ def plot_population_trend(assets_dir: Path, outputs_dir: Path):
     )
     fig, ax = plt.subplots(figsize=(10, 10))
     for county_code, population in population_df.iterrows():
-        capital_name = brazil_capitals_df[county_code]
+        capital_name = brazil_capitals_df.loc[county_code].squeeze()
         population_values = parse_population_values(population)
         ax.plot(
             population_values.index,
