@@ -7,6 +7,8 @@ import re
 from pathlib import Path
 from typing import List
 
+from tqdm import tqdm
+
 from src.assets_utils import (
     EducationNetwork,
     SchoolLevel,
@@ -24,14 +26,14 @@ def export_ideb_data(
     networks: List[EducationNetwork],
 ) -> None:
     """Export IDEB scores for each state's capital."""
-    for school_level in school_levels:
+    brazil_capitals_df = brazil_capitals_df_from_csv(assets_dir)
+    brazil_capitals_index = brazil_capitals_df.index
+    for school_level in tqdm(school_levels, position=0, desc="School levels"):
         ideb_df = ideb_df_from_ods(assets_dir, school_level)
-        brazil_capitals_df = brazil_capitals_df_from_csv(assets_dir)
-        brazil_capitals_series = brazil_capitals_df.squeeze()
-        for network in networks:
-            network_list = [network.value] * len(brazil_capitals_series)
+        for network in tqdm(networks, position=1, desc="Education Networks"):
+            network_list = [network.value] * len(brazil_capitals_index)
             ideb_capital_indices = list(
-                zip(brazil_capitals_series, network_list)
+                zip(brazil_capitals_index, network_list)
             )
 
             # Ignore missing indices by only keeping the intersection.
