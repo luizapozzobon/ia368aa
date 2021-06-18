@@ -23,6 +23,7 @@ module = [
     "matplotlib.*",
     "scipy.*",
     "sklearn.*",
+    "tqdm.*",
     "pandas",
 ]
 ignore_missing_imports = true
