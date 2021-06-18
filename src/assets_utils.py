@@ -1,6 +1,5 @@
 """Utility methods to process assets datasets."""
 from enum import Enum
-from locale import LC_NUMERIC, atoi, setlocale
 from pathlib import Path
 from typing import Set
 
@@ -14,8 +13,6 @@ from src.consts import (
     IDEB_SCHOOL_FILENAME_FORMAT,
     POPULATION_PER_CAPITAL_FILENAME,
 )
-
-setlocale(LC_NUMERIC, ("pt_BR", "UTF-8"))
 
 
 def population_df_from_csv(assets_dir: Path) -> pd.DataFrame:
@@ -61,7 +58,9 @@ def parse_population_values(
     population = population.dropna()
 
     # Cast series values to integers using pt_BR locale.
-    cast_population = population.apply(lambda obj: atoi(str(obj)))
+    cast_population = population.apply(
+        lambda obj: int(str(obj).replace(".", ""))
+    )
     return cast_population
 
 
@@ -71,7 +70,7 @@ class CapitalProperty(Enum):
     COUNTY_CODE = "Código"
     NAME = "Capitais"
     STATE = "Estados"
-    STATE_ABBREV = "Sigals dos Estados"
+    STATE_ABBREV = "Siglas dos Estados"
     REGION = "Regiões"
 
 
