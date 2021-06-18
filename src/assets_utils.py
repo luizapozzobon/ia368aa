@@ -93,7 +93,7 @@ def brazil_capitals_df_from_csv(
     brazil_capitals_df = pd.read_csv(
         assets_dir / BRAZILIAN_CAPITALS_FILENAME,
         usecols=usecol_names,
-        index_col=0,
+        # index_col=0,
     )
     return brazil_capitals_df
 
