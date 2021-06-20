@@ -19,8 +19,9 @@ homicides_per_capita: $(OUTPUT_DIR)
 
 parse_ideb: $(OUTPUT_DIR)
 	python -m $(SCRIPTS_DIR).parse_ideb \
-		--networks Pública Estadual Municipal \
-		--school_levels anos_finais
+		--networks Pública Estadual Municipal Federal \
+		--school_levels anos_iniciais anos_finais ensino_medio
+
 
 $(OUTPUT_DIR):
 	@mkdir -p $(OUTPUT_DIR)
