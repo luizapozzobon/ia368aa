@@ -10,6 +10,7 @@ from typing import List
 from tqdm import tqdm
 
 from src.assets_utils import (
+    CapitalProperty,
     EducationNetwork,
     SchoolLevel,
     brazil_capitals_df_from_csv,
@@ -19,9 +20,10 @@ from src.assets_utils import (
 from src.utils import default_parser
 
 
-def export_ideb_data(
+def export_ideb_capital_data(
     assets_dir: Path,
     outputs_dir: Path,
+    only_capitals: bool,
     school_levels: List[SchoolLevel],
     networks: List[EducationNetwork],
 ) -> None:
@@ -52,6 +54,48 @@ def export_ideb_data(
             )
 
 
+def export_all_ideb_data(
+    assets_dir: Path,
+    outputs_dir: Path,
+    only_capitals: bool,
+    school_levels: List[SchoolLevel],
+    networks: List[EducationNetwork],
+) -> None:
+    """Export IDEB scores for each state's capital."""
+
+    def keep_year(col):
+        return re.findall(r"\d+", col)
+
+    brazil_capitals_df = brazil_capitals_df_from_csv(
+        assets_dir,
+        set(CapitalProperty).difference({CapitalProperty.COUNTY_CODE}),
+    ).set_index(CapitalProperty.STATE_ABBREV.value)
+
+    for school_level in tqdm(school_levels, position=0, desc="School levels"):
+        ideb_df = ideb_df_from_ods(assets_dir, school_level)
+        for network in tqdm(networks, position=1, desc="Education Networks"):
+            ideb_network_df = ideb_df.query("Rede == @network.value")
+
+            ideb_network_df.columns = [
+                keep_year(col)[0] if keep_year(col) else col
+                for col in ideb_network_df.columns
+            ]
+
+            ideb_network_df["Regiões"] = (
+                ideb_network_df.reset_index()["Sigla da UF"]
+                .apply(
+                    lambda x: brazil_capitals_df.loc[x][
+                        CapitalProperty.REGION.value
+                    ]
+                )
+                .values
+            )
+
+            ideb_network_df.to_csv(
+                outputs_dir / ideb_capital_csv_filename(school_level, network)
+            )
+
+
 if __name__ == "__main__":
     parser = default_parser()
     parser.add_argument(
@@ -70,4 +114,16 @@ if __name__ == "__main__":
         choices=list(EducationNetwork),
         help="Type of education network results we wish to export data for.",
     )
-    export_ideb_data(**vars(parser.parse_args()))
+
+    parser.add_argument(
+        "--only_capitals",
+        default=False,
+        type=bool,
+        help="If True, export only capitals' scores, else all cities'.",
+    )
+
+    if parser.parse_args().only_capitals:
+        print("Only capitals.")
+        export_ideb_capital_data(**vars(parser.parse_args()))
+    else:
+        export_all_ideb_data(**vars(parser.parse_args()))

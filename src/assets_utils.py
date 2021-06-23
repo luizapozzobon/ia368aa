@@ -151,7 +151,7 @@ def ideb_df_from_ods(
         assets_dir / IDEB_SCHOOL_FILENAME_FORMAT.format(school_level.value),
         engine="odf",
         index_col=[0, 1],
-        usecols="B,D," + ideb_column_range(school_level),
+        usecols="A,B,C,D," + ideb_column_range(school_level),
         skipfooter=3,
         skiprows=lambda r: r <= 9 and r != 6,  # Keep 7th row as header.
     )
@@ -179,3 +179,8 @@ def ideb_capital_df_from_csv(
         na_values="-",
     )
     return ideb_capital_df
+
+
+def ideb_parsed_to_csv(ideb_parsed: pd.DataFrame, outputs_dir: Path):
+    """Save totally parsed ideb file."""
+    ideb_parsed.to_csv(outputs_dir / "ideb_parsed.csv")
