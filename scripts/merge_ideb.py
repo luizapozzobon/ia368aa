@@ -28,18 +28,18 @@ def merge_ideb_data(
         dfs = []
         for network in networks:
             df = ideb_capital_df_from_csv(outputs_dir, level, network)
-            melted = df.melt(
-                id_vars=["Código do Município"],
+            melted = df.reset_index().melt(
+                id_vars=[
+                    "Código do Município",
+                    "Sigla da UF",
+                    "Regiões",
+                    "Nome do Município",
+                    "Rede",
+                ],
                 value_vars=[col for col in df.columns if col.isnumeric()],
                 var_name="Ano",
                 value_name="IDEB",
             )
-            melted["Esfera"] = network
-            melted = melted.set_index("Código do Município", drop=False)
-            melted = melted.join(
-                df.set_index("Código do Município")[["Regiões"]]
-            )
-
             dfs.append(melted)
 
     ideb = pd.concat(dfs).reset_index(drop=True)
