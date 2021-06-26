@@ -12,7 +12,7 @@ from src.assets_utils import (
     EducationNetwork,
     SchoolLevel,
     ideb_capital_df_from_csv,
-    ideb_parsed_to_csv,
+    ideb_merged_to_csv,
 )
 from src.utils import default_parser
 
@@ -42,9 +42,9 @@ def merge_ideb_data(
             )
             dfs.append(melted)
 
-    ideb = pd.concat(dfs).reset_index(drop=True)
+        ideb = pd.concat(dfs).reset_index(drop=True)
 
-    ideb_parsed_to_csv(ideb, outputs_dir)
+        ideb_merged_to_csv(ideb, outputs_dir, level)
 
 
 if __name__ == "__main__":

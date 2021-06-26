@@ -181,6 +181,10 @@ def ideb_capital_df_from_csv(
     return ideb_capital_df
 
 
-def ideb_parsed_to_csv(ideb_parsed: pd.DataFrame, outputs_dir: Path):
+def ideb_merged_to_csv(
+    ideb_merged: pd.DataFrame, outputs_dir: Path, school_level: SchoolLevel
+):
     """Save totally parsed ideb file."""
-    ideb_parsed.to_csv(outputs_dir / "ideb_parsed.csv")
+    ideb_merged.to_csv(
+        outputs_dir / f"ideb_merged_{school_level.name.lower()}.csv"
+    )
